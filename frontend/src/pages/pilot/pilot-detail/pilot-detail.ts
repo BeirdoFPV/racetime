@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PilotProvider } from '../../../providers/pilot/pilot';
-
+import { Observable } from 'rxjs/Observable';
+import { DataProvider } from '../../../providers/data/data';
 /**
  * Generated class for the PilotDetailPage page.
  *
@@ -16,12 +16,13 @@ import { PilotProvider } from '../../../providers/pilot/pilot';
 })
 export class PilotDetailPage {
 
-  pilot;
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: PilotProvider) {
-    this.pilot = this.navParams.data;
-        service.get(this.pilot._id).subscribe(
-          pilot => this.pilot = pilot
-        );
+  pilot:Observable<any>;
+
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public service: DataProvider) {
+    this.pilot = service.pilots$().get(this.navParams.data._id);
   }
 
   ionViewDidLoad() {

@@ -7,6 +7,8 @@ module.exports = function(app) {
   app.on('connection', connection => {
     // On a new real-time connection, add it to the anonymous channel
     app.channel('anonymous').join(connection);
+
+    app.channel('race').join(connection);
   });
 
   app.on('login', (authResult, { connection }) => {
@@ -21,6 +23,9 @@ module.exports = function(app) {
 
       // Add it to the authenticated user channel
       app.channel('authenticated').join(connection);
+
+      app.channel('racecontrol').join(connection);
+      app.channel('racedevice').join(connection);
 
       // Channels can be named anything and joined on any condition 
       

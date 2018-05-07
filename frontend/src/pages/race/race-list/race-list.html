@@ -17,7 +17,7 @@
 
 <ion-content padding class="card-bg">
 
-    <ion-card *ngFor="let race of races">
+    <ion-card *ngFor="let race of races$ | async">
 
     <button ion-item (click)="openDetail(race)">
       <h2>{{race.name}}</h2>

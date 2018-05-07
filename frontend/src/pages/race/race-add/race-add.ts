@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { RaceProvider } from '../../../providers/race/race';
+import { Observable } from 'rxjs/Observable';
+import { DataProvider } from '../../../providers/data/data';
 
 /**
  * Generated class for the RaceAddPage page.
@@ -24,7 +25,7 @@ export class RaceAddPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
-    public service:RaceProvider,
+    public service:DataProvider,
     public toastCtrl:ToastController) {
 
   }
@@ -34,7 +35,7 @@ export class RaceAddPage {
   }
 
   createRace() {
-    this.service
+    this.service.races$()
       .create(this.race)
       .subscribe((result:any) => {
         if( result._id !== null ){

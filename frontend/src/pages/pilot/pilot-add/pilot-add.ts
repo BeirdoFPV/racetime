@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { PilotProvider } from '../../../providers/pilot/pilot';
+import { Observable } from 'rxjs/Observable';
+import { DataProvider } from '../../../providers/data/data';
 
 /**
  * Generated class for the PilotAddPage page.
@@ -24,11 +25,12 @@ export class PilotAddPage {
       channel: 1
     }
   };
+  
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
-    public service:PilotProvider,
+    public service:DataProvider,
     public toastCtrl:ToastController) {
   }
 
@@ -37,7 +39,7 @@ export class PilotAddPage {
   }
 
   createPilot() {
-    this.service
+    this.service.pilots$()
       .create(this.pilot)
       .subscribe((result:any) => {
         if( result._id !== null ){

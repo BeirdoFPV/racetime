@@ -1,6 +1,6 @@
 <!-- Generated template for the PilotselectorComponent component -->
 <ion-list *ngIf="pilots">
-  <ion-item *ngFor="let pilot of pilots" (click)="togglePilot(pilot)">
+  <ion-item *ngFor="let pilot of pilots$ | async" (click)="togglePilot(pilot)">
 
       <ion-avatar item-left>
         <img src="{{pilot.avatar}}" />

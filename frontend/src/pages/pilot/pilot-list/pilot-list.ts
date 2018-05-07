@@ -1,9 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { PilotProvider } from '../../../providers/pilot/pilot';
 import { PilotAddPage } from '../pilot-add/pilot-add';
 import { PilotDetailPage } from '../pilot-detail/pilot-detail';
 import { PilotEditPage } from '../pilot-edit/pilot-edit';
+import { Observable } from 'rxjs/Observable';
+import { DataProvider } from '../../../providers/data/data';
+import 'rxjs/add/operator/map';
 
 /**
  * Generated class for the PilotListPage page.
@@ -15,14 +17,18 @@ import { PilotEditPage } from '../pilot-edit/pilot-edit';
 @IonicPage()
 @Component({
   selector: 'page-pilot-list',
-  templateUrl: 'pilot-list.html'
+  templateUrl: 'pilot-list.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class PilotListPage {
 
-  pilots;
+  pilots$:Observable<any[]>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: PilotProvider) {
-    service.findAll().subscribe((data:any) => this.pilots = data.data);
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public service: DataProvider) {
+    this.pilots$ = service.pilots$().find().map(p => p.data);
   }
 
   addPilot() {
@@ -34,7 +40,7 @@ export class PilotListPage {
   }
 
   removePilot(pilot) {
-    this.service.remove(pilot._id);
+    this.service.pilots$().remove(pilot._id);
   }
 
   editPilot(pilot) {

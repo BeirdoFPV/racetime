@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { TrackProvider } from '../../../providers/track/track';
+import { Observable } from 'rxjs/Observable';
+import { DataProvider } from '../../../providers/data/data';
 
 /**
  * Generated class for the TrackDetailPage page.
@@ -16,16 +17,13 @@ import { TrackProvider } from '../../../providers/track/track';
 })
 export class TrackDetailPage {
 
-  track;
+  track:Observable<any>;
 
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams, 
-    public service:TrackProvider) {
-    this.track = this.navParams.data;
-        service.get(this.track._id).subscribe(
-          pilot => this.track = pilot
-        );
+    public service:DataProvider) {
+    this.track = service.tracks$().get(this.navParams.data._id);
   }
 
   ionViewDidLoad() {

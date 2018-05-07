@@ -1,10 +1,11 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
+import { Observable } from 'rxjs/Observable';
 import { TrackAddPage } from '../track-add/track-add';
 import { TrackDetailPage } from '../track-detail/track-detail';
 import { TrackEditPage } from '../track-edit/track-edit';
-import { TrackProvider } from '../../../providers/track/track';
-
+import { DataProvider } from '../../../providers/data/data';
+import 'rxjs/add/operator/map';
 /**
  * Generated class for the TrackListPage page.
  *
@@ -16,13 +17,17 @@ import { TrackProvider } from '../../../providers/track/track';
 @Component({
   selector: 'page-track-list',
   templateUrl: 'track-list.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class TrackListPage {
 
-  tracks : Array<{name:string}>;
+  tracks$ : Observable<any[]>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service: TrackProvider) {
-    service.findAll().subscribe((data:any) => this.tracks = data.data);
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public service:DataProvider) {    
+    this.tracks$ = service.tracks$().find().map(t => t.data);
   }
 
   addTrack() {
@@ -30,7 +35,7 @@ export class TrackListPage {
   }
 
   removeTrack(track) {
-    this.service.remove(track._id);
+    this.service.tracks$().remove(track);
   }
 
   editTrack() {

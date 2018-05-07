@@ -18,7 +18,7 @@
 
 <ion-content padding class="card-bg">
 
-    <ion-card *ngFor="let pilot of pilots">
+    <ion-card *ngFor="let pilot of pilots$ | async">
 
     <button ion-item (click)="openDetail(pilot)">
       <ion-avatar item-left>

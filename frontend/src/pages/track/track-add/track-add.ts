@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { IonicPage, NavController, NavParams, ToastController } from 'ionic-angular';
-import { TrackProvider } from '../../../providers/track/track';
+import { DataProvider } from '../../../providers/data/data';
 
 /**
  * Generated class for the TrackAddPage page.
@@ -23,7 +23,7 @@ export class TrackAddPage {
   constructor(
     public navCtrl: NavController, 
     public navParams: NavParams,
-    public service:TrackProvider,
+    public service:DataProvider,
     public toastCtrl:ToastController) {
   }
 
@@ -32,7 +32,7 @@ export class TrackAddPage {
   }
 
   createTrack() {
-    this.service
+    this.service.tracks$()
       .create(this.track)
       .subscribe((result:any) => {
         if( result._id !== null ){

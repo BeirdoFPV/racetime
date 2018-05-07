@@ -1,6 +1,6 @@
 import { Component, Input } from '@angular/core';
-import { PilotProvider } from '../../providers/pilot/pilot';
-
+import { DataProvider } from '../../providers/data/data';
+import { Observable } from 'rxjs/Observable';
 /**
  * Generated class for the PilotselectorComponent component.
  *
@@ -13,11 +13,11 @@ import { PilotProvider } from '../../providers/pilot/pilot';
 })
 export class PilotSelectorComponent {
 
-  public pilots:Array<any>;
+  public pilots$:Observable<any>;
   @Input() selected:Array<string>;
 
-  constructor(public service:PilotProvider) {
-    service.findAll().subscribe((data:any) => this.pilots = data.data);
+  constructor(public service:DataProvider) {
+    this.pilots$ = service.pilots$();
   }
 
   togglePilot(pilot){

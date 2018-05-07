@@ -1,6 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, ChangeDetectionStrategy } from '@angular/core';
 import { IonicPage, NavController, NavParams } from 'ionic-angular';
-import { RaceProvider } from '../../../providers/race/race';
+import { Observable } from 'rxjs/Observable';
+import { DataProvider } from '../../../providers/data/data';
 
 /**
  * Generated class for the RaceDetailPage page.
@@ -13,16 +14,17 @@ import { RaceProvider } from '../../../providers/race/race';
 @Component({
   selector: 'page-race-detail',
   templateUrl: 'race-detail.html',
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class RaceDetailPage {
 
-  race;
+  race$:Observable<any>;
 
-  constructor(public navCtrl: NavController, public navParams: NavParams, public service:RaceProvider) {
-    this.race = this.navParams.data;
-        service.get(this.race._id).subscribe(
-          race => this.race = race
-        );
+  constructor(
+    public navCtrl: NavController, 
+    public navParams: NavParams, 
+    public service:DataProvider) {
+    this.race$ = service.races$().get(this.navParams.data._id);
   }
 
   ionViewDidLoad() {
