@@ -30,6 +30,7 @@
     "@types/feathersjs__feathers": "^3.0.3",
     "@types/feathersjs__socketio-client": "^1.0.1",
     "@types/socket.io-client": "^1.4.32",
+    "feathers-reactive": "^0.6.0",
     "ionic-angular": "3.9.2",
     "ionicons": "3.0.0",
     "rxjs": "5.5.10",

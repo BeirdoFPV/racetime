@@ -20,8 +20,8 @@ export class DataProvider {
 
   private fetch(name:string){
     return (<any>this.feathers
-      .service(name)
-      .watch());
+      .service(name))
+      .watch();
 
     /* let service = this.services[name];
     if(service === undefined)
